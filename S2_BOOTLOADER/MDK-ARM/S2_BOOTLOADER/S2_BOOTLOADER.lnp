@@ -1,0 +1,27 @@
+--cpu=Cortex-M4.fp.sp --branchpatch=sdcomp-29491-629360
+"s2_bootloader\startup_stm32l496xx.o"
+"s2_bootloader\main.o"
+"s2_bootloader\stm32l4xx_it.o"
+"s2_bootloader\stm32l4xx_hal_msp.o"
+"s2_bootloader\stm32l4xx_hal.o"
+"s2_bootloader\stm32l4xx_hal_rcc.o"
+"s2_bootloader\stm32l4xx_hal_rcc_ex.o"
+"s2_bootloader\stm32l4xx_hal_flash.o"
+"s2_bootloader\stm32l4xx_hal_flash_ex.o"
+"s2_bootloader\stm32l4xx_hal_flash_ramfunc.o"
+"s2_bootloader\stm32l4xx_hal_gpio.o"
+"s2_bootloader\stm32l4xx_hal_i2c.o"
+"s2_bootloader\stm32l4xx_hal_i2c_ex.o"
+"s2_bootloader\stm32l4xx_hal_dma.o"
+"s2_bootloader\stm32l4xx_hal_dma_ex.o"
+"s2_bootloader\stm32l4xx_hal_pwr.o"
+"s2_bootloader\stm32l4xx_hal_pwr_ex.o"
+"s2_bootloader\stm32l4xx_hal_cortex.o"
+"s2_bootloader\stm32l4xx_hal_exti.o"
+"s2_bootloader\system_stm32l4xx.o"
+"s2_bootloader\bootloader.o"
+"s2_bootloader\delay.o"
+--strict --scatter "S2_BOOTLOADER\S2_BOOTLOADER.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "S2_BOOTLOADER.map" -o S2_BOOTLOADER\S2_BOOTLOADER.axf
