@@ -1,8 +1,12 @@
 --cpu=Cortex-M4.fp.sp --branchpatch=sdcomp-29491-629360
 "s2_bootloader\startup_stm32l496xx.o"
 "s2_bootloader\main.o"
+"s2_bootloader\gpio.o"
+"s2_bootloader\tim.o"
 "s2_bootloader\stm32l4xx_it.o"
 "s2_bootloader\stm32l4xx_hal_msp.o"
+"s2_bootloader\stm32l4xx_hal_tim.o"
+"s2_bootloader\stm32l4xx_hal_tim_ex.o"
 "s2_bootloader\stm32l4xx_hal.o"
 "s2_bootloader\stm32l4xx_hal_rcc.o"
 "s2_bootloader\stm32l4xx_hal_rcc_ex.o"

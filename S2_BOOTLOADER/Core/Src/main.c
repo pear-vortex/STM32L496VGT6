@@ -18,6 +18,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
+#include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -48,14 +50,13 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+volatile uint32_t TIM3CNT = 0;
 /* USER CODE END 0 */
 
 /**
@@ -87,12 +88,16 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 #ifdef bootloader
+	updateFlash();
 	delay_s(3);
 	JumpToApp(0x08008000);
 	
 #endif
+
+	TIM3->CR1 |= TIM_CR1_CEN;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -100,11 +105,14 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-		GPIOB->ODR |= (1<<0);
-		delay_ms(1);
-		GPIOB->ODR &= ~(1<<0);
-		delay_ms(1);
+
     /* USER CODE BEGIN 3 */
+		TIM3CNT = TIM3->CNT;
+		
+		GPIOB->ODR |= (0x1<<0);
+		delay_ms(1);
+		GPIOB->ODR &= ~(0x1<<0);
+		delay_ms(1);
   }
   /* USER CODE END 3 */
 }
@@ -155,38 +163,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-}
-
-/**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GPIO_Init(void)
-{
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
-
-  /* USER CODE END MX_GPIO_Init_1 */
-
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : PB0 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */

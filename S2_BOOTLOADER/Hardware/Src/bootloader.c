@@ -28,3 +28,28 @@ void JumpToApp(uint32_t appAddr)
 	//Execute app function
 	app_func();
 }
+
+
+/**
+ * @brief Unlock the flash for write access
+ * @param None
+ */
+void Flash_Unlock(void) {
+    if (HAL_FLASH_Unlock() != HAL_OK) {
+    }
+}
+
+/**
+ * @brief Update the flash specified memory address with the given data
+ * @param None
+ */
+HAL_StatusTypeDef updateFlash(void)
+{
+	Flash_Unlock();
+	
+	HAL_StatusTypeDef status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_FAST, 0x08088000, 0xAB);
+
+	HAL_FLASH_Lock();
+
+	return status;
+}
